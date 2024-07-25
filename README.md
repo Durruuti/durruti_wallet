@@ -1,35 +1,27 @@
 # durruti_wallet
-A Rust implementation of a digital wallet
 
-## About
-durruti_wallet is a digital wallet implemented in Rust, designed to provide a secure and efficient way to manage your digital assets.
+Un proyecto de wallet de Bitcoin que utiliza el dispositivo Ledger para generar claves privadas y públicas.
 
-## Features
-* Secure storage of private keys and digital assets
-* Support for multiple cryptocurrency protocols
-* Easy-to-use API for integrating with other applications
-* Written in Rust for memory safety and performance
+## Características
 
-## Getting Started
-### Prerequisites
-* Rust 1.49 or later
-* Cargo package manager
+* Genera claves privadas y públicas utilizando el dispositivo Ledger
+* Simula el comportamiento del dispositivo Ledger utilizando un simulador mock
+* Permite interactuar con el dispositivo Ledger físico o con el simulador mock
 
-### Installation
-1. Clone the repository: `git clone https://github.com/Durruuti/durruti_wallet.git`
-2. Change into the repository directory: `cd durruti_wallet`
-3. Build and run the project: `cargo run`
+## Uso
 
-### Usage
-* Import the library in your Rust project: `extern crate durruti_wallet;`
-* Create a new instance of the wallet: `let wallet = durruti_wallet::Wallet::new();`
-* Use the wallet API to manage your digital assets: `wallet.create_account("my_account", "my_password");`
+1. Clona el repositorio utilizando `git clone <url-del-repositorio>`
+2. Compila el proyecto utilizando `cargo build`
+3. Ejecuta el proyecto utilizando `cargo run`
 
-## Contributing
-Contributions are welcome! If you'd like to contribute to durruti_wallet, please fork the repository and submit a pull request.
+## Configuración
 
-## License
-durruti_wallet is licensed under the Apache License 2.0.
+Para utilizar el dispositivo Ledger físico, asegúrate de que esté conectado y configurado correctamente. Para utilizar el simulador mock, no es necesario configurar nada.
 
-## Authors
-* [Durruti] - Initial implementation and maintenance
+## Contribuciones
+
+Si deseas contribuir al proyecto, por favor crea un fork del repositorio y envía una solicitud de pull request con tus cambios.
+
+## Licencia
+
+Este proyecto está licenciado bajo la licencia MIT.
