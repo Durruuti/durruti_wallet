@@ -32,4 +32,4 @@ Contributions are welcome! If you'd like to contribute to durruti_wallet, please
 durruti_wallet is licensed under the Apache License 2.0.
 
 ## Authors
-* [Your Name] - Initial implementation and maintenance
+* [Durruti] - Initial implementation and maintenance
