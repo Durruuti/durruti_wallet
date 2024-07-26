@@ -18,7 +18,7 @@ fn main() -> Result<(), MyError> {
 
     let apdu = ApduType::GetBalance;
     let data = &[0x01, 0x01, 0x42];
-    let response = ledger.transmit(Vec<u8>)?;
+    let response = ledger.transmit(data.to_vec())?;
 
     println!("Response: {:?}", response);
     Ok(())
