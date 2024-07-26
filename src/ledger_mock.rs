@@ -7,7 +7,7 @@ pub mod ledger_mock {
 
     impl LedgerMock {
         pub fn new() -> Self {
-            LedgerMock {
+            Self {
                 apdu_responses: HashMap::new(),
             }
         }
@@ -16,12 +16,12 @@ pub mod ledger_mock {
             self.apdu_responses.insert(apdu, response);
         }
 
-        pub fn get_apdu_response(&self, apdu: &Vec<u8>) -> Option<&Vec<u8>> {
+        pub fn get_apdu_response(&self, apdu: &[u8]) -> Option<&Vec<u8>> {
             self.apdu_responses.get(apdu)
         }
 
         pub fn transmit(&mut self, apdu: Vec<u8>) -> Vec<u8> {
-            self.apdu_responses.get(&apdu).cloned().unwrap_or_else(|| vec![0x6A, 0x86])
+            self.get_apdu_response(&apdu).map(|v| v.clone()).unwrap_or_else(|| vec![0x6A, 0x86])
         }
     }
 }
