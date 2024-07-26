@@ -5,7 +5,6 @@ use bitcoin::{PrivateKey, PublicKey, Address, Network};
 use bitcoin::secp256k1::{Secp256k1, SecretKey};
 use rand::Rng;
 
-
 // Módulo para el simulador mock del dispositivo Ledger
 mod ledger_mock {
     use std::collections::HashMap;
@@ -40,7 +39,20 @@ const APDU1: &[u8] = &[0x01, 0x02, 0x03];
 const APDU2: &[u8] = &[0x02, 0x03, 0x04];
 const APDU3: &[u8] = &[0x03, 0x04, 0x05];
 
-fn main() -> Result<(), bitcoin::secp256k1::Error> {
+#[derive(Debug)]
+enum MyError {
+    BitcoinError(()),
+}
+
+impl From<bitcoin::secp256k1::Error> for MyError {
+    fn from(_err: bitcoin::secp256k1::Error) -> Self {
+        MyError::BitcoinError(())
+    }
+}
+
+
+
+fn main() -> Result<(), MyError> {
     let secp = Secp256k1::new();
 
     // Crear instancia del simulador mock del dispositivo Ledger
