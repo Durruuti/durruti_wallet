@@ -38,9 +38,9 @@ mod ledger_mock {
 }
 
 // APDUs de prueba
-const APDU1: &[u8] = &[0x01, 0x02, 0x03];
-const APDU2: &[u8] = &[0x02, 0x03, 0x04];
-const APDU3: &[u8] = &[0x03, 0x04, 0x05];
+const APDU_1: &[u8] = &[0x01, 0x02, 0x03];
+const APDU_2: &[u8] = &[0x02, 0x03, 0x04];
+const APDU_3: &[u8] = &[0x03, 0x04, 0x05];
 
 // Enumeración de errores personalizados
 #[derive(Debug)]
@@ -65,8 +65,8 @@ fn main() -> Result<(), MyError> {
 
     // Establecer respuestas personalizadas para los APDUs de prueba
     let response = vec![0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x30, 0x31, 0x32];
-    ledger.set_apdu_response(APDU1.to_vec(), response.clone());
-    ledger.set_apdu_response(APDU2.to_vec(), vec![0x90, 0x01]);
+    ledger.set_apdu_response(APDU_1.to_vec(), response.clone());
+    ledger.set_apdu_response(APDU_2.to_vec(), vec![0x90, 0x01]);
 
     // Simular el envío de comandos y lectura de respuestas
     let apdu = [0x02, 0x01, 0x01, 0x42];
@@ -87,13 +87,13 @@ fn main() -> Result<(), MyError> {
     let address = Address::p2pkh(&public_key, Network::Bitcoin);
 
     // Imprimir dirección de Bitcoin
-    println("Dirección de Bitcoin (Ledger): {}", address);
+    println!("Dirección de Bitcoin (Ledger): {}", address);
 
     // Probar el simulador mock con los APDUs de prueba
-    let response2 = ledger.transmit(APDU2.to_vec());
+    let response2 = ledger.transmit(APDU_2.to_vec());
     assert_eq!(response2, vec![0x90, 0x01]);
 
-    let response3 = ledger.transmit(APDU3.to_vec());
+    let response3 = ledger.transmit(APDU_3.to_vec());
     assert_eq!(response3, vec![0x6A, 0x86]);
 
     Ok(())
