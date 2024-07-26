@@ -7,7 +7,8 @@ use rand::Rng;
 mod ledger_mock;
 mod apdu;
 
-use apdu::apdu::{APDU_1, APDU_2, APDU_3};
+use crate::apdu::apdu::ApduType;
+//use crate::apdu::apdu::{SELECT_APPLET_APDU, GET_BALANCE_APDU, GET_TRANSACTION_HISTORY_APDU};
 use apdu::apdu::generate_apdu;
 use ledger_mock::ledger_mock::LedgerMock;
 
@@ -29,20 +30,21 @@ const RESPONSE_1: [u8; 32] = [
     0x29, 0x30, 0x31, 0x32,
 ];
 
-fn main() -> Result<(), MyError> {
-    println!("{:?}", APDU_1);
-    println!("{:?}", APDU_2);
-    println!("{:?}", APDU_3);
+//const APDU_1: &[u8] = crate::apdu::apdu::SELECT_APPLET_APDU;
+const APDU_2: &[u8] = crate::apdu::apdu::GET_BALANCE_APDU;
+// const APDU_3: &[u8] = crate::apdu::apdu::GET_TRANSACTION_HISTORY_APDU;
 
+fn main() -> Result<(), MyError> {
+    println!("{:?}", APDU_2);
     let secp = Secp256k1::new();
 
     let mut ledger = LedgerMock::new();
 
     let response = RESPONSE_1.to_vec();
-    ledger.set_apdu_response(APDU_1.to_vec(), response.clone());
+    ledger.set_apdu_response(APDU_2.to_vec(), response.clone());
     ledger.set_apdu_response(APDU_2.to_vec(), vec![0x90, 0x01]);
 
-    let apdu = generate_apdu(0x02, &[0x01, 0x01, 0x42]);
+    let apdu = generate_apdu(ApduType::GetBalance, &[0x01, 0x01, 0x42]);
     let _response = ledger.transmit(apdu);
 
     let mut rng = rand::thread_rng();
