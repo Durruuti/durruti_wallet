@@ -10,7 +10,7 @@ Un proyecto de wallet de Bitcoin que utiliza el dispositivo Ledger para generar 
 
 ## Uso
 
-1. Clona el repositorio utilizando `git clone (https://github.com/Durruuti/durruti_wallet.git)`
+1. Clona el repositorio utilizando `git clone https://github.com/Durruuti/durruti_wallet.git`
 2. Compila el proyecto utilizando `cargo build`
 3. Ejecuta el proyecto utilizando `cargo run`
 
