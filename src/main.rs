@@ -40,7 +40,7 @@ const APDU1: &[u8] = &[0x01, 0x02, 0x03];
 const APDU2: &[u8] = &[0x02, 0x03, 0x04];
 const APDU3: &[u8] = &[0x03, 0x04, 0x05];
 
-fn main() {
+fn main() -> Result<(), bitcoin::secp256k1::Error> {
     let secp = Secp256k1::new();
 
     // Crear instancia del simulador mock del dispositivo Ledger
@@ -57,7 +57,7 @@ fn main() {
 
     let mut rng = rand::thread_rng();
     let secret_key_bytes: [u8; 32] = rng.gen();
-    let secret_key = SecretKey::from_slice(&secret_key_bytes).expect("Error creating secret key");
+    let secret_key = SecretKey::from_slice(&secret_key_bytes)?;
 
     // Crear clave privada desde la clave secreta
     let private_key = PrivateKey::new(secret_key, Network::Bitcoin);
@@ -77,6 +77,8 @@ fn main() {
 
     let response3 = ledger.transmit(APDU3.to_vec());
     assert_eq!(response3, vec![0x6A, 0x86]);
+
+    Ok(())
 }
 
 
