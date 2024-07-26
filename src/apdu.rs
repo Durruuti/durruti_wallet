@@ -1,4 +1,3 @@
-// apdu.rs
 pub mod apdu {
     pub enum ApduType {
         GetBalance,
