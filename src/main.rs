@@ -16,6 +16,7 @@ mod ledger_mock {
 
     impl LedgerMock {
         // Constructor para el simulador mock
+        // Crea una instancia vacía del simulador mock
         pub fn new() -> Self {
             LedgerMock {
                 apdu_responses: HashMap::new(),
@@ -23,11 +24,13 @@ mod ledger_mock {
         }
 
         // Método para establecer una respuesta personalizada para un APDU
+        // Permite establecer una respuesta específica para un APDU determinado
         pub fn set_apdu_response(&mut self, apdu: Vec<u8>, response: Vec<u8>) {
             self.apdu_responses.insert(apdu, response);
         }
 
         // Método para transmitir un APDU y obtener la respuesta correspondiente
+        // Devuelve la respuesta asociada al APDU si existe, o un valor predeterminado si no
         pub fn transmit(&mut self, apdu: Vec<u8>) -> Vec<u8> {
             self.apdu_responses.get(&apdu).cloned().unwrap_or_else(|| vec![0x6A, 0x86])
         }
@@ -39,20 +42,22 @@ const APDU1: &[u8] = &[0x01, 0x02, 0x03];
 const APDU2: &[u8] = &[0x02, 0x03, 0x04];
 const APDU3: &[u8] = &[0x03, 0x04, 0x05];
 
+// Enumeración de errores personalizados
 #[derive(Debug)]
 enum MyError {
+    // Error de Bitcoin
     BitcoinError(()),
 }
 
+// Implementación del trait From para convertir errores de secp256k1 en MyError
 impl From<bitcoin::secp256k1::Error> for MyError {
     fn from(_err: bitcoin::secp256k1::Error) -> Self {
         MyError::BitcoinError(())
     }
 }
 
-
-
 fn main() -> Result<(), MyError> {
+    // Crear instancia de Secp256k1
     let secp = Secp256k1::new();
 
     // Crear instancia del simulador mock del dispositivo Ledger
@@ -67,6 +72,7 @@ fn main() -> Result<(), MyError> {
     let apdu = [0x02, 0x01, 0x01, 0x42];
     let __response = ledger.transmit(apdu.to_vec());
 
+    // Generar clave secreta aleatoria
     let mut rng = rand::thread_rng();
     let secret_key_bytes: [u8; 32] = rng.gen();
     let secret_key = SecretKey::from_slice(&secret_key_bytes)?;
@@ -81,7 +87,7 @@ fn main() -> Result<(), MyError> {
     let address = Address::p2pkh(&public_key, Network::Bitcoin);
 
     // Imprimir dirección de Bitcoin
-    println!("Dirección de Bitcoin (Ledger): {}", address);
+    println("Dirección de Bitcoin (Ledger): {}", address);
 
     // Probar el simulador mock con los APDUs de prueba
     let response2 = ledger.transmit(APDU2.to_vec());
